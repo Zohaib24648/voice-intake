@@ -23,7 +23,7 @@ export function buildLlmDefinition({
   toolsUrl,
 }: Pick<VoiceEndpoints, 'toolsUrl'>): Retell.LlmCreateParams {
   return {
-    model: 'gpt-4.1',
+    model: 'gpt-5.6-luna',
     model_temperature: 0.1,
     start_speaker: 'agent',
     begin_message: FIRST_MESSAGE,
@@ -75,7 +75,7 @@ export function buildAgentDefinition({
     user_dtmf_options: { termination_key: '#', timeout_ms: 5_000 },
     end_call_after_silence_ms: 30_000,
     max_call_duration_ms: 900_000,
-    post_call_analysis_model: 'gpt-4.1-mini',
+    post_call_analysis_model: 'gpt-5.6-luna',
     data_storage_setting: 'everything',
   };
 }

@@ -5,7 +5,7 @@ A voice AI agent that registers new patients over a real U.S. phone number, pers
 ## How it works
 
 ```
- Caller ──PSTN──▶ Retell AI (telephony, speech-to-text, GPT-4.1, ElevenLabs text-to-speech)
+ Caller ──PSTN──▶ Retell AI (telephony, speech-to-text, GPT-5.6 Luna, ElevenLabs text-to-speech)
                      │
                      │  signed webhooks: custom-function calls, call_started / call_ended / call_analyzed
                      ▼
@@ -59,7 +59,7 @@ The three layers are kept separate, one set of directories each: telephony and L
 | Layer     | Choice                                          | Why                                                                                                                                                                                                        |
 | --------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Telephony | Retell AI with a Retell-provisioned U.S. number | Provisioning, STT, TTS, barge-in, and turn-taking are handled by the platform, leaving the time budget for the prompt, tools, and backend. Buying a number needs a card on file and identity verification. |
-| LLM       | OpenAI `gpt-4.1` via Retell LLM                 | Reliable tool calling and low first-token latency, which matters more on a phone call than raw reasoning. Swapping models is one line in `agent.ts`.                                                       |
+| LLM       | OpenAI `gpt-5.6-luna` via Retell LLM            | Used for both the conversation and the post-call summary. Reliable tool calling and low first-token latency matter more on a phone call than raw reasoning. Swapping models is one line in `agent.ts`.     |
 | STT / TTS | Retell "accurate" STT, ElevenLabs flash voice   | Accurate mode favours names and digit sequences; the ElevenLabs model is multilingual, so Spanish replies are spoken naturally. The agent is configured for English and Spanish.                           |
 | API       | Fastify 5 + Zod 4 (`fastify-type-provider-zod`) | Schema validation and serialization come from one Zod definition, types flow end to end, and the OpenAPI document at `/docs` is generated from the same schemas.                                           |
 | Database  | PostgreSQL + Drizzle ORM                        | Real constraints (enum, CHECK, unique, FK) enforced in the database, not just in code; SQL migrations are generated and committed.                                                                         |
